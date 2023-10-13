@@ -6,12 +6,18 @@ const WebpackPwaManifest = require('webpack-pwa-manifest')
 const { GenerateSW } = require('workbox-webpack-plugin')
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: './src/js/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.bundle.js',
         publicPath: '',
+    },
+    devServer: {
+        hot: true,
+    },
+    performance: {
+        hints: false,
     },
     module: {
         rules: [
