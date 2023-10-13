@@ -1,5 +1,6 @@
 import '../css/styles.css'
 
+import './db'
 import { PocketSynth } from './synth'
 import { Pad } from './pad'
 
