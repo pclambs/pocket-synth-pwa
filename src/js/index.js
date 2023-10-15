@@ -11,3 +11,9 @@ new Pad(
     () => pocketSynth.triggerRelease(),
     data => pocketSynth.moveNote(data),
 )
+
+if ('serviceworker' in navigator) {
+    navigator.serviceworker.register('./sw.js')
+        .then(() => console.log('service worker registered'))
+        .catch(err => console.log('error registering service worker', err))
+}
