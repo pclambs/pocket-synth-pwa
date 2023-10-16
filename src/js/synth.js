@@ -100,15 +100,17 @@ export class PocketSynth {
         })
 
         document.getElementById('frequency').addEventListener('input', (e) => {
-            this.setFilterFrequency(e.target.value)
-            document.getElementById('frequencyValue').textContent = e.target.value
+            let frequencyValue = Math.pow(10, e.target.value)
+            this.setFilterFrequency(frequencyValue)
+            document.getElementById('frequencyValue').textContent = Math.round(frequencyValue)
         })
 
         document.getElementById('q').addEventListener('input', (e) => {
-            this.setFilterQ(e.target.value)
-            document.getElementById('qValue').textContent = e.target.value
+            let qValue = Math.pow(10, e.target.value)
+            this.setFilterQ(qValue)
+            document.getElementById('qValue').textContent = qValue.toFixed(3)
         })
-        
+
     }
 
     setAttack(value) {
