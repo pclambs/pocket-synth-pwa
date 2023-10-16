@@ -1,11 +1,27 @@
 body {
   color: white;
   background: black;
-  background-image: url('../images/background-dark-1.png');
+  /* background-image: url('../images/background-dark-1.png'); */
+}
+
+p {
+  font-size: 1.5rem;
 }
 
 .container {
   display: block;
   max-width: 720px;
   margin: 0 auto;
+}
+
+.parameters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+.slider {
+  width: 100%;
 }

@@ -50,16 +50,6 @@ export class Pad {
         }
     }
     
-    handleMouseLeave(e) {
-        this.pressed = false
-        if (this.onPadDisengageCb) {
-            this.onPadDisengageCb({
-                x: this.xPosition,
-                y: this.yPosition,
-                pressed: this.pressed,
-            })
-        }
-    }
 
     updatePuckPosition(e) {
         this.xPosition = this.clamp(e.offsetX / this.pad.offsetWidth)

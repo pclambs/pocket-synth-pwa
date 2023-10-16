@@ -1,7 +1,8 @@
 import { Synth, Transport } from 'tone'
+import AudioKeys from 'audiokeys'
 
 export class PocketSynth {
-    synthNotes = ["C2", "E2", "G2", "A2", "C3", "D3", "E3", "G3", "A3", "B3", "C4", "D4", "E4", "G4", "A4", "B4", "C5"]
+    
     harmonicity = 0.5
     modulationType = 'sine'
 
@@ -11,19 +12,65 @@ export class PocketSynth {
             modulationType: this.modulationType,
         }).toDestination()
         this.transport = Transport
-        this.transport.bpm.value = 125
+        this.transport.bpm.value = 120
+
+        this.audiokeys = new AudioKeys()
+
+        this.audiokeys.down(note => {
+            this.triggerAttackByKey(note)
+        })
+
+        this.audiokeys.up(note => {
+            this.triggerRelease()
+        })
+
+        this.initUI()
     }
 
-    moveNote({ x, y }) {
-        const note = this.synthNotes[Math.round(x * (this.synthNotes.length -1))]
-        this.synth.setNote(note)
-        this.synth.harmonicity = y
+    initUI() {
+        document.getElementById('attack').addEventListener('input', (e) => {
+            this.setAttack(e.target.value)
+        });
+
+        document.getElementById('decay').addEventListener('input', (e) => {
+            this.setDecay(e.target.value)
+        });
+
+        document.getElementById('sustain').addEventListener('input', (e) => {
+            this.setSustain(e.target.value)
+        });
+
+        document.getElementById('release').addEventListener('input', (e) => {
+            this.setRelease(e.target.value)
+        });
     }
-    
-    triggerAttack({ x, y}) {
-        const note = this.synthNotes[Math.round(x * (this.synthNotes.length -1))]
-        this.synth.triggerAttack(note)
-        this.synth.harmonicity = y
+
+    setAttack(value) {
+        this.synth.envelope.attack = value / 100
+    }
+
+    setDecay(value) {
+        this.synth.envelope.decay = value / 100
+    }
+
+    setSustain(value) {
+        this.synth.envelope.sustain = value / 100
+    }
+
+    setRelease(value) {
+        this.synth.envelope.release = value / 100
+    }
+
+    midiToNote(midiNumber) {
+        const noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+        const octave = Math.floor(midiNumber / 12) - 1
+        const note = noteStrings[midiNumber % 12]
+        return note + octave
+    }
+
+    triggerAttackByKey(note) {
+        const keyNote = this.midiToNote(note.note)
+        this.synth.triggerAttack(keyNote)
     }
 
     triggerRelease() {
