@@ -1,16 +1,26 @@
-import { Synth, Transport } from 'tone'
+import { Synth, Transport, Filter } from 'tone'
 import AudioKeys from 'audiokeys'
 
 export class PocketSynth {
     
-    harmonicity = 0.5
-    modulationType = 'sine'
-
     constructor() {
+        // create synth
         this.synth = new Synth({
-            harmonicity: this.harmonicity,
-            modulationType: this.modulationType,
+            oscillator: {
+                type: 'sine'
+            }
+        })
+
+        // create filter
+        this.filter = new Filter({
+            type: 'lowpass',
+            frequency: 10000,
+            Q: 1
         }).toDestination()
+
+        // connect synth to filter
+        this.synth.connect(this.filter)
+
         this.transport = Transport
         this.transport.bpm.value = 120
 
@@ -43,28 +53,62 @@ export class PocketSynth {
                 // trigger release when no active notes
                 this.triggerRelease()
             }
-        
         })
 
         this.initUI()
     }
 
     initUI() {
+
         document.getElementById('attack').addEventListener('input', (e) => {
             this.setAttack(e.target.value)
+            document.getElementById('attackValue').textContent = e.target.value
         })
 
         document.getElementById('decay').addEventListener('input', (e) => {
             this.setDecay(e.target.value)
+            document.getElementById('decayValue').textContent = e.target.value
         })
 
         document.getElementById('sustain').addEventListener('input', (e) => {
             this.setSustain(e.target.value)
+            document.getElementById('sustainValue').textContent = e.target.value
         })
 
         document.getElementById('release').addEventListener('input', (e) => {
             this.setRelease(e.target.value)
+            document.getElementById('releaseValue').textContent = e.target.value
         })
+
+        document.getElementById('oscillator').addEventListener('keydown', function(e) {
+            e.preventDefault()
+            // e.stopPropagation()
+        })
+
+        document.getElementById('oscillator').addEventListener('change', (e) => {
+            this.setOscillatorType(e.target.value)
+            e.target.blur()
+        })
+
+        this.setOscillatorType = function(type) {
+            this.synth.oscillator.type = type
+        }
+
+        document.getElementById('filterType').addEventListener('change', (e) => {
+            this.setFilterType(e.target.value)
+            e.target.blur()
+        })
+
+        document.getElementById('frequency').addEventListener('input', (e) => {
+            this.setFilterFrequency(e.target.value)
+            document.getElementById('frequencyValue').textContent = e.target.value
+        })
+
+        document.getElementById('q').addEventListener('input', (e) => {
+            this.setFilterQ(e.target.value)
+            document.getElementById('qValue').textContent = e.target.value
+        })
+        
     }
 
     setAttack(value) {
@@ -81,6 +125,18 @@ export class PocketSynth {
 
     setRelease(value) {
         this.synth.envelope.release = value / 100
+    }
+
+    setFilterType(type) {
+        this.filter.type = type
+    }
+    
+    setFilterFrequency(value) {
+        this.filter.frequency.value = value
+    }
+    
+    setFilterQ(value) {
+        this.filter.Q.value = value
     }
 
     midiToNote(midiNumber) {

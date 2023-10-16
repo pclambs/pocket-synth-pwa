@@ -10,26 +10,81 @@
     <div id="pad">
       <div id="puck"></div>
     </div>
+
     <div class="parameters">
+
+      <div class="oscillator-type">
+        <p>Oscillator</p>
+        <label for="oscillator">Type:</label>
+          <select id="oscillator">
+            <option value="sine">Sine</option>
+            <option value="triangle">Triangle</option>
+            <option value="sawtooth">Sawtooth</option>
+            <option value="square">Square</option>
+          </select>
+      </div>
+
       <div class="amp-env">
+
         <p>Envelope</p>
-        <div class="slider">
-          <label for="attack">Attack</label>
+
+        <div class="slider-container">
+          <div class="label-container">
+            <label for="attack">Attack:</label>
+            <span id="attackValue">50</span>
+          </div>
           <input type="range" min="1" max="100" value="50" class="slider" id="attack">
         </div>
-        <div class="slider">
-          <label for="decay">Decay</label>
+        <div class="slider-container">
+          <div class="label-container">
+            <label for="decay">Decay:</label>
+            <span id="decayValue">50</span>
+          </div>
           <input type="range" min="1" max="100" value="50" class="slider" id="decay">
         </div>
-        <div class="slider">
-          <label for="sustain">Sustain</label>
+        <div class="slider-container">
+          <div class="label-container">
+            <label for="sustain">Sustain:</label>
+            <span id="sustainValue">50</span>
+          </div>
           <input type="range" min="1" max="100" value="50" class="slider" id="sustain">
         </div>
-        <div class="slider">
-          <label for="release">Release</label>
+        <div class="slider-container">
+          <div class="label-container">
+            <label for="release">Release:</label>
+            <span id="releaseValue">50</span>
+          </div>
           <input type="range" min="1" max="100" value="50" class="slider" id="release">
         </div>
+
       </div>
+
+      <div class="filter">
+
+        <p>Filter</p>
+
+        <label for="filterType">Type:</label>
+          <select id="filterType">
+            <option value="lowpass">Lowpass</option>
+            <option value="bandpass">Bandpass</option>
+            <option value="highpass">Highpass</option>
+          </select>
+        <div class="slider-container">
+          <div class="label-container">
+            <label for="frequency">Frequency:</label>
+            <span id="frequencyValue">50</span>
+          </div>
+          <input type="range" id="frequency" min="20" max="20000" step="1" />
+        </div>
+        <div class="slider-container">
+          <div class="label-container">
+            <label for="q">Q:</label>
+            <span id="qValue">50</span>
+          </div>
+          <input type="range" id="q" min="0.001" max="30" step="0.001" />
+        </div>
+      </div>
+
     </div>
   </main>
 </body>

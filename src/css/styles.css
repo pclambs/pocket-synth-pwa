@@ -25,3 +25,28 @@ p {
 .slider {
   width: 100%;
 }
+
+.oscillator-type, .amp-env, .filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.amp-env label, .amp-env span, .filter label, .filter span {
+  display: inline-block;
+}
+
+.label-container {
+  display: flex;
+  width: 100%;
+}
+
+.label-container span {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.slider-container input {
+  width: 100%;
+}
